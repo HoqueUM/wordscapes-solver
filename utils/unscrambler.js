@@ -1,12 +1,11 @@
-const fs = require('fs');
-const itertools = require('itertools');
-
+import { permutations } from 'itertools';
+import { readFile } from 'fs';
 // Cache for the word list to avoid reloading
 let wordListCache = null;
 
 function loadWordList(filePath) {
     return new Promise((resolve, reject) => {
-        fs.readFile(filePath, 'utf8', (err, data) => {
+        readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 reject(err);
             } else {
@@ -26,7 +25,7 @@ async function getCachedWordList(filePath) {
 
 async function isValidScrabbleWord(word) {
     try {
-        const wordList = await getCachedWordList('components/twl.txt');
+        const wordList = await getCachedWordList('utils/twl.txt');
         return wordList.has(word.toLowerCase());
     } catch (error) {
         console.error('Error loading word list:', error);
@@ -38,7 +37,7 @@ const checkCombinations = async (letters, minLength) => {
     let validCombinations = {};
 
     for (let length = minLength; length <= letters.length; length++) {
-        for (let perm of itertools.permutations(letters, length)) {
+        for (let perm of permutations(letters, length)) {
             let word = perm.join('').toLowerCase();
             let isValid = await isValidScrabbleWord(word);
             console.log(`${word} is a ${isValid ? 'Valid' : 'Invalid'} Scrabble word`);
@@ -51,7 +50,7 @@ const checkCombinations = async (letters, minLength) => {
     return validCombinations;
 }
 
-(async () => {
-    const valid_combinations = await checkCombinations('mionad', 3);
-    console.log(valid_combinations);
-})();
+export async function getValidWords(letters, length) {
+    const wordList = await checkCombinations(letters, length);
+    return wordList;
+}

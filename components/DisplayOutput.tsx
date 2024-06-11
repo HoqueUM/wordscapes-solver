@@ -4,7 +4,7 @@ import getValidWords from "../pages/api/getValidWords";
 export default function DisplayOutput() {
     const [letters, setLetters] = useState("");
     const [length, setLength] = useState(0);
-    const [result, setResult] = useState(null);
+    const [result, setResult] = useState<string[] | null>(null);
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
@@ -28,19 +28,21 @@ export default function DisplayOutput() {
                 placeholder="Letters"
                 value={letters}
                 onChange={(e) => setLetters(e.target.value)}
+                className="text-black"
             />
             <input
                 type="number"
                 placeholder="Min Length"
                 value={length}
                 onChange={(e) => setLength(Number(e.target.value))}
+                className="text-black"
             />
             <button type="submit">Submit</button>
             </form>
 
-            {result && (
+            {result && Array.isArray(result) && (
                 <ul>
-                    {Object.keys(result).map((word) => (
+                    {result.map((word: string) => (
                     <li key={word}>{word}</li>
                 ))}
                 </ul>

@@ -40,7 +40,6 @@ const checkCombinations = async (letters, minLength) => {
         for (let perm of permutations(letters, length)) {
             let word = perm.join('').toLowerCase();
             let isValid = await isValidScrabbleWord(word);
-            console.log(`${word} is a ${isValid ? 'Valid' : 'Invalid'} Scrabble word`);
             if (isValid) {
                 validCombinations[word] = true;
             }
@@ -51,6 +50,8 @@ const checkCombinations = async (letters, minLength) => {
 }
 
 export async function getValidWords(letters, length) {
-    const wordList = await checkCombinations(letters, length);
-    return wordList;
+    const validCombinations = await checkCombinations(letters, length);
+    const validWords = Object.keys(validCombinations);
+    validWords.sort();
+    return validWords;
 }

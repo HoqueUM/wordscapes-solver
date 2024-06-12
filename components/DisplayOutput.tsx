@@ -60,15 +60,16 @@ export default function DisplayOutput() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input
+            <form onSubmit={handleSubmit} className="flex flex-row space-x-4">
+            <input
                 type="text"
                 placeholder="Letters"
                 value={letters}
                 onChange={handleInputChange(setLetters)}
-                className="text-black"
+                className="text-white rounded-md bg-inherit backdrop-blur-md border border-[#606060]"
             />
             <select 
+
             onChange={(e) => {
                 setLength(e.target.value ? Number(e.target.value) : null);
                 setResult(null);
@@ -76,13 +77,14 @@ export default function DisplayOutput() {
             }}  
             name="length" 
             value={length ?? ""}  
-            className="text-black">
+            className="text-white rounded-md bg-inherit backdrop-blur-md border border-[#606060]">
                 <option value="">-</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit" className="text-white rounded-md bg-inherit backdrop-blur-md border border-[#606060] hover:bg-stone-700">Submit</button>
             </form>
+            <div className="flex flex-col justify-center items-center py-4 space-y-4 ">
             {error && <p>{error}</p>}
             {submitted && (result && Object.keys(result).length > 0 ? (
                 Object.keys(result).map((length) => (
@@ -97,6 +99,7 @@ export default function DisplayOutput() {
             ) : (
                 <p>No words found</p>
             ))}
+            </div>
         </div>
     );
 }

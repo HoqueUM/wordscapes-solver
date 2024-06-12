@@ -6,7 +6,6 @@ let wordListCache = null;
 
 async function loadWordList(filePath) {
     try {
-        console.log("Current working directory:", process.cwd()); // Log the current working directory
         const data = await readFile(filePath, 'utf8');
         const words = data.split('\n').map(word => word.trim().toLowerCase());
         return new Set(words);
@@ -24,7 +23,8 @@ async function getCachedWordList(filePath) {
 
 async function isValidScrabbleWord(word) {
     try {
-        const wordList = await getCachedWordList('./public/twl.txt'); // Initial attempt with relative path
+        const filePath = `${process.cwd()}/public/twl.txt`;
+        const wordList = await getCachedWordList(filePath);
         return wordList.has(word.toLowerCase());
     } catch (error) {
         console.error('Error loading word list:', error);

@@ -39,6 +39,10 @@ export default function DisplayOutput() {
             setError("Number of letters should be at most 10");
             return false;
         }
+        if (!/^[a-zA-Z]+$/.test(letters)) {
+            setError("Only letters are allowed");
+            return false;
+        }
         if (length === null) {
             setError("Please select a minimum length");
             return false;

@@ -53,5 +53,12 @@ export async function getValidWords(letters, length) {
     const validCombinations = await checkCombinations(letters, length);
     const validWords = Object.keys(validCombinations);
     validWords.sort();
-    return validWords;
+    let validWordsLengths = {};
+    for (let word of validWords) {
+        if (!validWordsLengths[word.length]) {
+            validWordsLengths[word.length] = [];
+        }
+        validWordsLengths[word.length].push(word);
+    }
+    return validWordsLengths;
 }

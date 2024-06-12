@@ -1,19 +1,17 @@
 import { permutations } from 'itertools';
-import { readFile } from 'fs';
+import { readFile } from 'fs/promises'; // Use promises-based API
+
 // Cache for the word list to avoid reloading
 let wordListCache = null;
 
-function loadWordList(filePath) {
-    return new Promise((resolve, reject) => {
-        readFile(filePath, 'utf8', (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                const words = data.split('\n').map(word => word.trim().toLowerCase());
-                resolve(new Set(words));
-            }
-        });
-    });
+async function loadWordList(filePath) {
+    try {
+        const data = await readFile(filePath, 'utf8');
+        const words = data.split('\n').map(word => word.trim().toLowerCase());
+        return new Set(words);
+    } catch (err) {
+        throw new Error(`Error reading file ${filePath}: ${err.message}`);
+    }
 }
 
 async function getCachedWordList(filePath) {

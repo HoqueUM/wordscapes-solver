@@ -23,7 +23,7 @@ async function getCachedWordList(filePath) {
 
 async function isValidScrabbleWord(word) {
     try {
-        const wordList = await getCachedWordList('/vercel/path0/public/twl.txt'); // Use absolute path
+        const wordList = await getCachedWordList('/var/task/public/twl.txt');
         return wordList.has(word.toLowerCase());
     } catch (error) {
         console.error('Error loading word list:', error);

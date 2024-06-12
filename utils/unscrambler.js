@@ -25,7 +25,7 @@ async function getCachedWordList(filePath) {
 
 async function isValidScrabbleWord(word) {
     try {
-        const wordList = await getCachedWordList('utils/twl.txt');
+        const wordList = await getCachedWordList('./utils/twl.txt');
         return wordList.has(word.toLowerCase());
     } catch (error) {
         console.error('Error loading word list:', error);

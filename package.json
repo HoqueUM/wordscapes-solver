@@ -21,6 +21,7 @@
     "react": "^18.3.1",
     "react-collapsible": "^2.10.0",
     "react-dom": "^18",
+    "sass": "^1.77.6",
     "scrabble-dict": "^1.0.2",
     "ts-node": "^10.9.2",
     "zlib": "^1.0.5"

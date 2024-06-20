@@ -3,6 +3,7 @@ import { useState } from "react";
 import getValidWords from "../pages/api/getValidWords";
 import Collapsible from "react-collapsible";
 
+
 export default function DisplayOutput() {
     const [letters, setLetters] = useState("");
     const [length, setLength] = useState<number | null>(null);
@@ -57,10 +58,17 @@ export default function DisplayOutput() {
         setError("");
         setSubmitted(false);
     };
-
+    const renderTrigger = (length: string, isOpen: boolean) => (
+        <div className="collapsible-trigger">
+            {`${length} letter words`}
+            <span className={`collapsible-arrow ${isOpen ? 'expanded' : 'collapsed'}`}>▼</span>
+        </div>
+    );
     return (
         <div>
             <form onSubmit={handleSubmit} className="flex flex-row space-x-4">
+            <div className="flex flex-col">
+            <p>Letters</p>
             <input
                 type="text"
                 placeholder="Letters"
@@ -68,6 +76,9 @@ export default function DisplayOutput() {
                 onChange={handleInputChange(setLetters)}
                 className="text-white rounded-md bg-inherit backdrop-blur-md border border-[#606060]"
             />
+            </div>
+            <div className="flex flex-col">
+            <p>Minimum length</p>
             <select 
 
             onChange={(e) => {
@@ -78,17 +89,25 @@ export default function DisplayOutput() {
             name="length" 
             value={length ?? ""}  
             className="text-white rounded-md bg-inherit backdrop-blur-md border border-[#606060]">
-                <option value="">-</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+                <option value="" className="text-black">-</option>
+                <option value="3" className="text-black">3</option>
+                <option value="4" className="text-black">4</option>
             </select>
+            </div>
+            <div className="flex flex-col">
+            <p className="text-stone-900">‎ </p>
             <button type="submit" className="text-white rounded-md bg-inherit backdrop-blur-md border border-[#606060] hover:bg-stone-700">Submit</button>
+            </div>
             </form>
             <div className="flex flex-col justify-center items-center py-4 space-y-4 ">
             {error && <p>{error}</p>}
             {submitted && (result && Object.keys(result).length > 0 ? (
                 Object.keys(result).map((length) => (
-                    <Collapsible key={length} trigger={`Words of length ${length}`}>
+                    <Collapsible 
+                        key={length} 
+                        trigger={renderTrigger(length, false)} 
+                        triggerWhenOpen={renderTrigger(length, true)}
+                    >
                         <ul>
                             {(result[length] as string[]).map((word: string) => (
                                 <li key={word}>{word}</li>

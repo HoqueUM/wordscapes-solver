@@ -1,0 +1,19 @@
+.collapsible-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.collapsible-arrow {
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+}
+
+.collapsible-arrow.collapsed {
+    transform: rotate(0deg);
+}
+
+.collapsible-arrow.expanded {
+    transform: rotate(180deg);
+}
